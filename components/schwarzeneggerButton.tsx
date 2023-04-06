@@ -1,4 +1,4 @@
-import {Soundbutton} from "@/components/soundbutton";
+import {SoundButton} from "@/components/soundButton";
 import schwarzenegger1 from "../public/schwarzenegger1.mp3"
 import schwarzenegger2 from "../public/schwarzenegger2.mp3"
 import schwarzenegger3 from "../public/schwarzenegger3.mp3"
@@ -21,7 +21,7 @@ export function SchwarzeneggerButton() {
         schwarzenegger8,
         schwarzenegger9,
     ]
-    return <Soundbutton
+    return <SoundButton
         title={'schwarzenegger button'}
         audioLocations={locations}
         spammy={false}

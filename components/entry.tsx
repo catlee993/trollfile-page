@@ -2,10 +2,10 @@ import {
     Accordion,
     AccordionButton,
     AccordionItem,
-    AccordionPanel, Divider,
+    AccordionPanel, Box, Button, Divider,
     Flex,
     Heading,
-    Image, Text,
+    Image, Img, Text,
     Tooltip,
     VStack, Wrap
 } from "@chakra-ui/react";
@@ -13,10 +13,27 @@ import {Profile} from "@/components/profile";
 import {FartButton} from "@/components/fartButton";
 import {SchwarzeneggerButton} from "@/components/schwarzeneggerButton";
 import {MusicButton} from "@/components/musicButton";
-import React from "react";
+import React, {useState} from "react";
 import {TheDrawer} from "@/components/drawer";
+import FileUploadModal from "@/components/fileUploadModal";
 
 export function Entry() {
+    const [urls, setUrls] = useState<String[]>([]);
+
+    async function handleClick() {
+        await fetch('http://127.0.0.1:8080/junk', {
+            method: 'GET',
+        }).then((response) => response.json())
+        .then((data) => {
+            console.log(data)
+            const urls: String[] = [];
+            for (const url of data.urls) {
+                urls.push(url)
+            }
+            setUrls(urls)
+        })
+    }
+
     return (
         <>
             <TheDrawer/>
@@ -67,7 +84,20 @@ export function Entry() {
                             </AccordionButton>
                             <AccordionPanel>
                                 <VStack>
-                                    <Text color={'purple.100'}>nothing here yet</Text>
+                                    <Text color={'purple.100'}>obviously i&apos;m limiting traffic for this stuff.</Text>
+                                    <FileUploadModal/>
+                                    <Button onClick={handleClick}>here&apos;s stuff button</Button>
+                                    <Box>
+                                    <>
+                                        {urls.length > 0 && urls.map(k => (
+                                            <Img key={'whatever'+k.toString()}
+                                                 maxWidth={'300px'}
+                                                 maxHeight={'300px'}
+                                                 src={k.toString()}
+                                            />
+                                        ))}
+                                    </>
+                                    </Box>
                                 </VStack>
                             </AccordionPanel>
                         </AccordionItem>
